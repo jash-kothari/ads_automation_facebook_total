@@ -1,0 +1,26 @@
+{
+    # campaign_id for automated ad generation
+    "campaign_id":"6058189894517",
+    # Total number of ads to be created
+    "number_of_ads": 20,
+    # Number of cards in carousel ad
+    "number_of_cards": 5,
+    # Total number of lineitems to be considered should be divisible by numberof cards
+    "number_of_items": 100,
+    # Categories to be considered to be given as comma separated values
+    "categories": "wedding-sarees,cotton-sarees",
+    # Interest Groups for targeting ads
+    "interest_list": "6003167425934,6003348604581,6003266266843",
+    # Minimum Age for targeting
+    "age_min": 24,
+    # Maximum Age for targeting
+    "age_max": 50,
+    # Daily Budget in paise
+    "daily_budget":50000,
+    # Bid Amount in paise
+    "bid_amount":100,
+    # Start Date in YYYY/MM/DD format for adset
+    "start_time":"2016/09/30",
+    # End Date in YYYY/MM/DD format for adset
+    "end_time":"2016/10/30"
+}
