@@ -1,4 +1,7 @@
+psycopg2
 facebookads
 commentjson
-psycopg2
+six
+requests
+Pillow
 logging
