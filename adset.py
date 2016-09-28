@@ -42,5 +42,5 @@ def create_adset(country_list,interest_list,age_min,age_max,adset_name,campaign_
 		logging.error('Error %s' % e)
 		return None
 
-	sleep(15)
+	sleep(60)
 	return adset[AdSet.Field.id]

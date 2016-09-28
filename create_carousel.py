@@ -40,7 +40,7 @@ def create_carousel_ad(caption,adset_id,ad_name,design_list,land_on_design,url,c
 			if land_on_design:
 				product1[AdCreativeLinkDataChildAttachment.Field.link] = 'www.mirraw.com/designers/'+str(row['designer_id'])+'/designs/'+str(design_id[0])+'?utm_source=facebook-auto&utm_medium='+utm_medium+'&utm_campaign='+campaign_tag
 			else:
-				product1[AdCreativeLinkDataChildAttachment.Field.link] = url+'?'+str(design_id)+'&utm_source=facebook&utm_medium='+utm_medium+'&utm_campaign='+campaign_tag
+				product1[AdCreativeLinkDataChildAttachment.Field.link] = url+'?pid='+str(design_id)+'&utm_source=facebook&utm_medium='+utm_medium+'&utm_campaign='+campaign_tag
 			product1[AdCreativeLinkDataChildAttachment.Field.name] = category_name['name']
 			product1[AdCreativeLinkDataChildAttachment.Field.description] = 'Discount '+str(row['discount_percent'])+'%'
 			logging.info(image_link)

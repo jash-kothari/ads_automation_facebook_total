@@ -10,17 +10,17 @@
     # Categories to be considered to be given as comma separated values
     "categories": "wedding-sarees,cotton-sarees",
     # Interest Groups for targeting ads
-    "interest_list": "6003167425934,6003348604581,6003266266843",
+    "interest_list": "interestgroup1.txt,interetgorup2.txt",
     # Minimum Age for targeting
-    "age_min": 24,
+    "age_min": 22,
     # Maximum Age for targeting
-    "age_max": 50,
+    "age_max": 65,
     # Daily Budget in paise
     "daily_budget":50000,
     # Bid Amount in paise
-    "bid_amount":100,
+    "bid_amount":500,
     # Start Date in YYYY/MM/DD format for adset
-    "start_time":"2016/09/30",
+    "start_time":"2016/09/28",
     # End Date in YYYY/MM/DD format for adset
-    "end_time":"2016/10/30"
+    "end_time":"2016/10/29"
 }

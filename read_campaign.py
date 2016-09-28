@@ -1,9 +1,11 @@
 from facebookads.adobjects.campaign import Campaign
 from facebookads import exceptions
 from datetime import date
+from time import sleep
 import create_carousel as carousel
 import commentjson as json
 import psycopg2.extras
+import get_targeting
 import urlparse
 import psycopg2
 import logging
@@ -59,17 +61,19 @@ try:
 	start_time = file['start_time']
 	end_time = file['end_time']
 
+	connection1 = header.create_connection()
+	dbCursor = connection1.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
 	campaign = Campaign(campaign_id)
 	campaign.remote_read(fields=[Campaign.Field.name,Campaign.Field.id])
 	countries = campaign[Campaign.Field.name].split(',')
 
-	connection1 = header.create_connection()
-	dbCursor = connection1.cursor(cursor_factory=psycopg2.extras.DictCursor)
-
 	for country in countries:
 		for name in categories:
-			for interests in interest_list:
-				adset_name = interests+'-'+name
+			for interest in interest_list:
+				adset_name = interest.replace('.txt','')+'-'+name
+				sleep(60)
+				interests = get_targeting.list_ids(interest)
 				adset_id = adset.create_adset(country,interests,age_min,age_max,adset_name,campaign_id,daily_budget,bid_amount,start_time,end_time)
 				dbCursor.execute("SELECT l.design_id FROM line_items l,categories_designs cd,categories c WHERE cd.design_id=l.design_id AND c.id=cd.category_id AND l.created_at > current_date - interval '90' day and c.name like '" + name + "' GROUP BY l.design_id,c.name ORDER BY count(l.id) DESC LIMIT "+str(number_of_items))
 				rows=dbCursor.fetchall()
