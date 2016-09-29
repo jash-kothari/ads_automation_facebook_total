@@ -6,13 +6,13 @@ import header
 from datetime import date
 import json
 
-FORMAT = '%(asctime)-15s %(message)s %(pathname)s'
+FORMAT = '%(asctime)-15s %(pathname)s %(message)s'
 logging.basicConfig(filename='%s-facebook-automated.log' % date.today(),format=FORMAT, level=logging.DEBUG)
 def list_ids(name):
 	interest_ids=[]
 	with open(name) as fp:
 	    for line in fp:
-	    	print line
+			logging.info(line)
 			# query = raw_input("Enter query for targeting customer type.\n")
 		params = {
 				'q': line,

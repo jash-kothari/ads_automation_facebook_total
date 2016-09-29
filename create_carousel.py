@@ -17,12 +17,12 @@ import urlparse
 import logging
 
 def create_carousel_ad(caption,adset_id,ad_name,design_list,land_on_design,url,campaign_tag):
-	FORMAT = '%(asctime)-15s %(message)s %(pathname)s'
+	FORMAT = '%(asctime)-15s %(pathname)s %(message)s'
 	logging.basicConfig(filename='%s-facebook-automated.log' % date.today(),format=FORMAT, level=logging.DEBUG)
 	logging.info('In create carousel')
 	connection = None
 	simple_list=[]
-	utm_medium='fb-acpm'
+	utm_medium='exp'
 	try:
 		connection = header.create_connection()
 		cursor = connection.cursor(cursor_factory=psycopg2.extras.DictCursor)

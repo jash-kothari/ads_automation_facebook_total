@@ -1,6 +1,6 @@
 {
     # campaign_id for automated ad generation
-    "campaign_id":"6058189894517",
+    "campaign_id":"6058988860317",
     # Total number of ads to be created
     "number_of_ads": 20,
     # Number of cards in carousel ad
@@ -20,7 +20,7 @@
     # Bid Amount in paise
     "bid_amount":500,
     # Start Date in YYYY/MM/DD format for adset
-    "start_time":"2016/09/29",
+    "start_time":"2016/09/30",
     # End Date in YYYY/MM/DD format for adset
-    "end_time":"2016/09/30"
+    "end_time":"2016/10/01"
 }

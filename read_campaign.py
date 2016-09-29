@@ -43,7 +43,7 @@ def serialized_ads_creation(adset_id,rows,number_of_ads,number_of_cards,caption)
 
 connection1 = None
 try:
-	FORMAT = '%(asctime)-15s %(message)s %(pathname)s'
+	FORMAT = '%(asctime)-15s %(pathname)s %(message)s'
 	logging.basicConfig(filename='%s-facebook-automated.log' % date.today(),format=FORMAT, level=logging.DEBUG)
 	# Reading from config.json
 	file = json.loads(open('config.json').read())
@@ -72,8 +72,8 @@ try:
 		for name in categories:
 			for interest in interest_list:
 				adset_name = interest.replace('.txt','')+'-'+name
-				sleep(60)
 				interests = get_targeting.list_ids(interest)
+				sleep(60)
 				adset_id = adset.create_adset(country,interests,age_min,age_max,adset_name,campaign_id,daily_budget,bid_amount,start_time,end_time)
 				dbCursor.execute("SELECT l.design_id FROM line_items l,categories_designs cd,categories c WHERE cd.design_id=l.design_id AND c.id=cd.category_id AND l.created_at > current_date - interval '90' day and c.name like '" + name + "' GROUP BY l.design_id,c.name ORDER BY count(l.id) DESC LIMIT "+str(number_of_items))
 				rows=dbCursor.fetchall()

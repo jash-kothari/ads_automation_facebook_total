@@ -10,7 +10,7 @@ import os
 
 def get_image_hash(url,name):
 	try:
-		FORMAT = '%(asctime)-15s %(message)s %(pathname)s'
+		FORMAT = '%(asctime)-15s %(pathname)s %(message)s'
 		logging.basicConfig(filename='%s-facebook-automated.log' % date.today(),format=FORMAT, level=logging.DEBUG)
 		logging.info('Downloading image')
 		urllib.urlretrieve(url,name)

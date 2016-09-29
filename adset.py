@@ -11,7 +11,7 @@ import sys
 
 def create_adset(country_list,interest_list,age_min,age_max,adset_name,campaign_id,daily_budget,bid_amount,start_time,end_time):
 	try:
-		FORMAT = '%(asctime)-15s %(message)s %(pathname)s'
+		FORMAT = '%(asctime)-15s %(pathname)s %(message)s'
 		logging.basicConfig(filename='%s-facebook-automated.log' % date.today(),format=FORMAT, level=logging.DEBUG)
 		targeting = {
 			Targeting.Field.geo_locations: {
