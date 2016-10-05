@@ -10,8 +10,9 @@ import os
 
 def get_image_hash(url,name):
 	try:
-		FORMAT = '%(asctime)-15s %(pathname)s %(message)s'
+		FORMAT = '%(name)s:%(levelname)s:%(asctime)-15s:%(message)s'
 		logging.basicConfig(filename='%s-facebook-automated.log' % date.today(),format=FORMAT, level=logging.DEBUG)
+		logging.getLogger('image_hash')
 		logging.info('Downloading image')
 		urllib.urlretrieve(url,name)
 		image1 = Img.open(header.PWD+'/'+name)
@@ -25,8 +26,8 @@ def get_image_hash(url,name):
 		image = AdImage(parent_id=header.my_account['id'])
 		image[AdImage.Field.filename] = name
 		logging.info('Uploading image')
-		sleep(15)
 		image.remote_create()
+		sleep(20)
 		os.remove(name)
 		logging.info('Deleted image locally')
 

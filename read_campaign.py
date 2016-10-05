@@ -15,24 +15,24 @@ import adset
 import sys
 import os
 
-def check_number_of_ads(number_of_items,number_of_cards,number_of_ads,adset_id,caption):
+def check_number_of_ads(number_of_items,number_of_cards,number_of_ads,adset_id,caption,country):
 	logging.info('In check number of ads')
 	if number_of_ads > (number_of_items/number_of_cards):
-		serialized_ads_creation(adset_id,rows,(number_of_items/number_of_cards),number_of_cards,caption)
+		serialized_ads_creation(adset_id,rows,(number_of_items/number_of_cards),number_of_cards,caption,country)
 		number_of_ads -= (number_of_items/number_of_cards)
 		return number_of_ads
 	else :
-		serialized_ads_creation(adset_id,rows,(number_of_items/number_of_cards),number_of_cards,caption)
+		serialized_ads_creation(adset_id,rows,(number_of_items/number_of_cards),number_of_cards,caption,country)
 		return 0
 
-def serialized_ads_creation(adset_id,rows,number_of_ads,number_of_cards,caption):
+def serialized_ads_creation(adset_id,rows,number_of_ads,number_of_cards,caption,country):
 	j=0
 	k=number_of_cards
 	logging.info('In serialized ads creation')
 	for i in xrange(number_of_ads):
 		design_list = rows[j:k]
 		ad_name = caption+' top items '+str(j)+'-'+str(k)
-		ad_created = carousel.create_carousel_ad(caption,adset_id,ad_name,design_list,True,'',caption+'_'+str(i))
+		ad_created = carousel.create_carousel_ad(caption,adset_id,ad_name,design_list,False,'www.mirraw.com/store/'+name,caption+'_'+str(i),country)
 		if not(ad_created):
 			logging.error('Error creating ad for design ids %s' % design_list)
 		else:
@@ -43,8 +43,9 @@ def serialized_ads_creation(adset_id,rows,number_of_ads,number_of_cards,caption)
 
 connection1 = None
 try:
-	FORMAT = '%(asctime)-15s %(pathname)s %(message)s'
+	FORMAT = '%(name)s:%(levelname)s:%(asctime)-15s:%(message)s'
 	logging.basicConfig(filename='%s-facebook-automated.log' % date.today(),format=FORMAT, level=logging.DEBUG)
+	logging.getLogger('read_campaign')
 	# Reading from config.json
 	file = json.loads(open('config.json').read())
 
@@ -61,7 +62,7 @@ try:
 	start_time = file['start_time']
 	end_time = file['end_time']
 
-	connection1 = header.create_connection()
+	connection1 = header.create_connection(os.environ['FB_APP_DATABASE_URL'])
 	dbCursor = connection1.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
 	campaign = Campaign(campaign_id)
@@ -73,7 +74,6 @@ try:
 			for interest in interest_list:
 				adset_name = interest.replace('.txt','')+'-'+name
 				interests = get_targeting.list_ids(interest)
-				sleep(60)
 				adset_id = adset.create_adset(country,interests,age_min,age_max,adset_name,campaign_id,daily_budget,bid_amount,start_time,end_time)
 				dbCursor.execute("SELECT l.design_id FROM line_items l,categories_designs cd,categories c WHERE cd.design_id=l.design_id AND c.id=cd.category_id AND l.created_at > current_date - interval '90' day and c.name like '" + name + "' GROUP BY l.design_id,c.name ORDER BY count(l.id) DESC LIMIT "+str(number_of_items))
 				rows=dbCursor.fetchall()
@@ -82,12 +82,12 @@ try:
 					number_of_items -= (number_of_items%number_of_cards)
 				remaining = number_of_ads
 				while remaining > 0:
-					remaining=check_number_of_ads(number_of_items,number_of_cards,remaining,adset_id,name)
+					remaining=check_number_of_ads(number_of_items,number_of_cards,remaining,adset_id,name,country)
 					random.shuffle(rows)
-				sleep(30)
-			sleep(30)
-		sleep(30)
-	sleep(30)
+				sleep(45)
+			sleep(45)
+		sleep(45)
+	sleep(45)
 
 except psycopg2.DatabaseError, e:
 	logging.error('Error %s' % e)

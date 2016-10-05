@@ -21,9 +21,11 @@ FacebookAdsApi.init(my_app_id, my_app_secret, my_access_token)
 me = AdUser(fbid='me')
 my_account = me.get_ad_accounts()[0]
 my_account=json.loads(str(my_account).replace('<AdAccount> ',''))
-def create_connection():
-	database_url = os.environ['FB_APP_DATABASE_URL']
+def create_connection(database_url):
 	urlparse.uses_netloc.append("postgres")
 	database_url = urlparse.urlparse(database_url)
 	connection = psycopg2.connect( database=database_url.path[1:], user=database_url.username, password=database_url.password, host=database_url.hostname, port=database_url.port )
 	return connection
+def close_connection(connection):
+	if connection:
+		connection.close()
